@@ -33,6 +33,10 @@ def eigh(x, /, *, lower=True, symmetrize_input=True, sort_eigenvalues=True):
     def symmetrize(x):
         # TODO : Take Hermitian transpose after complex numbers added
         return (x + ivy.swapaxes(x, -1, -2)) / 2
+    
+@to_ivy_arrays_and_back
+def all_gather(x, axis_name, *, axis_index_groups=None, axis=0, tiled=False):    
+    return jax.lax.all_gather(x, 'i', axis_index_groups=[[0, 2], [3, 1]])
 
     if symmetrize_input:
         x = symmetrize(x)
